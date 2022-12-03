@@ -27,11 +27,22 @@ function createAnElement(){
     containerElement.appendChild(buttonElement);
     countdownContainerElement.appendChild(containerElement);
 
-    fromEvent(buttonElement, "click").pipe(tap(()=> {
-        //console.log("button clicked");
-        const totalSeconds = inputElement.value;
-        console.log(totalSeconds);
-    })).subscribe();
+    fromEvent(buttonElement, "click").pipe(tap(() => {
+      console.log("button clicked");
+      const totalSeconds = inputElement.value;
+      const hoursMinutesSecondsObject= getCountDownValues(totalSeconds);
+      let countdown = totalSeconds;
+      setInterval(()=> {  
+          // EVERY SECONDS REDUCE THE VALUE
+          // DISPLAY THE VALUE
+        
+          getCountDownValues(countdown);
+          console.log(getCountDownText(getCountDownValues(countdown)));
+          containerElement.innerText = getCountDownText(getCountDownValues(countdown));
+          countdown--;
+         
+      }, 1000)
+  })).subscribe();
 }
 
 // Format an countdown object to a countdown string
